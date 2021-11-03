@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>关于 Java volatile 的随笔记 | River 江河</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/favicon.ico">
+    <script charset="utf-8" async="async" src="/js/jquery.min.js"></script>
+    <script charset="utf-8" async="async" src="/js/fingerprint2.min.js"></script>
+    <script charset="utf-8" async="async" src="https://s9.cnzz.com/z_stat.php?id=1278232949&amp;web_id=1278232949"></script>
+    <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?e0d604d5dea105bdeffb878e1b5c2b0f";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+          </script>
+    <meta name="description" content="积少成多，汇聚江河。">
+    <meta property="article:published_time" content="2020-09-05T21:25:08.000Z">
+    <meta property="article:modified_time" content="null">
+    <meta property="og:title" content="关于 Java volatile 的随笔记">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="/posts/java/concurrent/%E5%85%B3%E4%BA%8E%20Java%20volatile%20%E7%9A%84%E9%9A%8F%E7%AC%94%E8%AE%B0.html">
+    <meta name="twitter:title" content="关于 Java volatile 的随笔记">
+    <meta name="twitter:url" content="/posts/java/concurrent/%E5%85%B3%E4%BA%8E%20Java%20volatile%20%E7%9A%84%E9%9A%8F%E7%AC%94%E8%AE%B0.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="并发编程">
+    <meta property="article:tag" content="并发编程">
+    <meta name="robots" content="all">
+    <meta name="author" content="米凤君">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="keywords" content="river,米凤君,设计模式,虚拟机">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <link rel="preload" href="/assets/css/0.styles.37e14bdf.css" as="style"><link rel="preload" href="/assets/css/styles.css?v=1635955335105" as="style"><link rel="preload" href="/assets/js/cg-styles.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-app.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-4.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-3.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-22.js?v=1635955335105" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.37e14bdf.css"><link rel="stylesheet" href="/assets/css/styles.css?v=1635955335105">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/favicon.ico" alt="River 江河" class="logo"> <span class="site-name can-hide">River 江河</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/posts/index/nav.html" class="nav-link">
+  导读
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><span class="title">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/posts/java/jvm/1. 运行时数据区域.html" class="nav-link">
+  JVM
+</a></li></ul></div></div><div class="nav-item"><a href="/posts/about/about-me.html" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://github.com/mifengjun" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/posts/index/nav.html" class="nav-link">
+  导读
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><span class="title">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/posts/java/jvm/1. 运行时数据区域.html" class="nav-link">
+  JVM
+</a></li></ul></div></div><div class="nav-item"><a href="/posts/about/about-me.html" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://github.com/mifengjun" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <!----> </aside> <div><main class="withouttoc page"> <div class="theme-default-content content__default"><p>问题的开始, 今天偶然见到一位群友的问题</p> <p><code>synchronized</code> 是怎么保证可见性的?</p> <p>先说一下这个问题的答案,</p> <p><code>java 在锁释放的时候,通过jmm将缓存中的值, 刷新到内存当中, 以此来保证了数据的可见性</code></p> <p>其实这个问题, 我们在群里延伸了很多内容, 从JMM到MESI, 从 Java 代码到汇编指令. 因为讨论的内容较多较深, 固有这篇随笔记, 这一切要感谢提出 <code>synchronized</code>是怎么保证可见性的这位同学;</p> <p>今天讨论的内容主要就是围绕 volatile 展开的, 主要的是讨论了一下 volatile 的实现, 对于 volatile 的实现, 这里有一个很好的文章来理解 @何登成 的《C/C++ volatile 关键字剖析》</p> <p>在 C/C++ 中，volatile具有易变性，是因为当读取 volatile 关键字修饰的变量的时候，不会读取寄存器的值，而是通过缓存重新加载到寄存器，然后再去读取这个值。同时volatile关键字还具有不可优化的特性，主要体现在不可用常量替换。必须要取缓存中读取寄存器在使用。接下来的就是 volatile 关键字的顺序性问题，在 C/C++中, 普通操作与volatile操作可能出现乱序的情况. 而 volatile操作与volatile操作在不同的处理器情况下, 仍然可能出现乱序的情况. 这是因为 cpu 要对指令优化可能进行排序, 在 x86 上, 读指令就有可能提前到写指令之前. storeload 乱序.</p> <p>volatile 的顺序性问题, 在 C/C++中对于不同的处理器, 仍然会出现乱序的情况, volatile 决定不了. (解决的办法就是实现顺序一致规则 happends-before 语义)</p> <hr> <p>Java 中, volatile 关键字继承了 C/C++中的可见性之外, 又进行了一个操作, 使得 volatile 关键字拥有了顺序性. 那就是内存屏障. 最关键的就是 StoreLoad 屏障, 解决了在X86处理器上的写读重排序的问题</p> <blockquote><p>X86处理器仅会对写-读操作做重排序。X86不会对读-读、读-写和写-写操作做重排序</p></blockquote> <p>在 Java 层面, 虚拟机通过插入内存屏障来实现 volatile, 这部内容可以在虚拟机源码中 OrderAccess 类中找到, 一共是4个方法, 分别对应到4个内存屏障中.</p> <p>而在CPU层面, 具体的执行则是使用了 Lock 前缀指令关于 Lock 前缀的指令作用</p> <p>关于  Lock 前缀, 这里简单总结一下. 在执行前增加 Lock 前缀</p> <ol><li>保证了对内存操作的原子性 (通过锁内存总线来实现, 这样会使所有处理器无法访问内存数据. 所以还有另外一种情况, 即所需要操作的数据在带有 Lock 前缀指令执行之前就已经被持有该缓存行的处理器锁定, 则不会通过锁总线来完成这步指令, 因为此时的数据无法被其他处理器读取, 该操作成为缓存锁定 . 但当处理器竞争程度较高, 或指令内存地址未对齐时, 仍会锁住总线)</li> <li>禁止重排序</li> <li>写入缓存的值刷新到主内存中</li></ol></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/mifengjun/river/edit/master/docs/posts/java/concurrent/关于 Java volatile 的随笔记.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新: </span> <span class="time">2021/11/3</span></div></footer> <!----> </main></div> <aside class="page-sidebar"> <div class="page-side-toolbar"><!----> <div class="option-box-toc-over"><img src="/images/system/toc.png" class="nozoom"> <span class="show-txt">目录</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="max-height:550px"><div style="font-weight:bold;text-align:center;">关于 Java volatile 的随笔记</div> <hr> <div class="toc-box"><!----></div></div></div></div></div> <div class="option-box"><img src="/images/system/mobi.png" width="25px" class="nozoom"> <span class="show-txt">手机看</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.9rem">微信扫一扫</span> <img height="180px" src="https://api.qrserver.com/v1/create-qr-code/?data=https://tama.wiki/posts/java/concurrent/%E5%85%B3%E4%BA%8E%20Java%20volatile%20%E7%9A%84%E9%9A%8F%E7%AC%94%E8%AE%B0.html" style="margin:10px;">
+                可以<b>手机看</b>或分享至<b>朋友圈</b></div></div></div></div> <div class="option-box"><img src="/images/system/toggle.png" width="25px" class="nozoom"> <span class="show-txt">左栏</span></div> <div class="option-box"><img src="/images/system/talk.png" width="25px" class="nozoom"> <span class="show-txt">交流群</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.8rem;font-weight:bold;">添加我的微信进群交流</span> <img src="/images/personal/wechat_qrcode.png" height="180px" style="margin:10px;">
+                PS：添加时请备注<b>加群</b>，谢谢！
+              </div></div></div></div> <div class="option-box"><img src="/images/system/guli.png" width="25px" class="nozoom"> <span class="show-txt">支持我</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.8rem;font-weight:bold;">鼓励/支持/赞赏我</span> <img height="180px" src="/images/personal/guli.png" style="margin:5px;"> <br>鼓励鼓励
+              </div></div></div></div> <!----> <!----></div>  <!----> </aside></div><div class="global-ui"><LockArticle></LockArticle></div></div>
+    <script src="/assets/js/cg-styles.js?v=1635955335105" defer></script><script src="/assets/js/cg-4.js?v=1635955335105" defer></script><script src="/assets/js/cg-3.js?v=1635955335105" defer></script><script src="/assets/js/cg-22.js?v=1635955335105" defer></script><script src="/assets/js/cg-app.js?v=1635955335105" defer></script>
+  </body>
+</html>

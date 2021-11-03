@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jenkins 自动化部署 spring boot 项目（多图） | River 江河</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/favicon.ico">
+    <script charset="utf-8" async="async" src="/js/jquery.min.js"></script>
+    <script charset="utf-8" async="async" src="/js/fingerprint2.min.js"></script>
+    <script charset="utf-8" async="async" src="https://s9.cnzz.com/z_stat.php?id=1278232949&amp;web_id=1278232949"></script>
+    <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?e0d604d5dea105bdeffb878e1b5c2b0f";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+          </script>
+    <meta name="description" content="积少成多，汇聚江河。">
+    <meta property="article:published_time" content="2018-05-14T15:57:51.000Z">
+    <meta property="article:modified_time" content="null">
+    <meta property="og:title" content="jenkins 自动化部署 spring boot 项目（多图）">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="/posts/reprint/jenkins%20%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20spring%20boot%20%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%A4%9A%E5%9B%BE%EF%BC%89.html">
+    <meta name="twitter:title" content="jenkins 自动化部署 spring boot 项目（多图）">
+    <meta name="twitter:url" content="/posts/reprint/jenkins%20%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20spring%20boot%20%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%A4%9A%E5%9B%BE%EF%BC%89.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="教程">
+    <meta property="article:tag" content="教程">
+    <meta name="robots" content="all">
+    <meta name="author" content="米凤君">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="keywords" content="river,米凤君,设计模式,虚拟机">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <link rel="preload" href="/assets/css/0.styles.37e14bdf.css" as="style"><link rel="preload" href="/assets/css/styles.css?v=1635955335105" as="style"><link rel="preload" href="/assets/js/cg-styles.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-app.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-4.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-3.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-56.js?v=1635955335105" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.37e14bdf.css"><link rel="stylesheet" href="/assets/css/styles.css?v=1635955335105">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/favicon.ico" alt="River 江河" class="logo"> <span class="site-name can-hide">River 江河</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/posts/index/nav.html" class="nav-link">
+  导读
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><span class="title">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/posts/java/jvm/1. 运行时数据区域.html" class="nav-link">
+  JVM
+</a></li></ul></div></div><div class="nav-item"><a href="/posts/about/about-me.html" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://github.com/mifengjun" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/posts/index/nav.html" class="nav-link">
+  导读
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><span class="title">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/posts/java/jvm/1. 运行时数据区域.html" class="nav-link">
+  JVM
+</a></li></ul></div></div><div class="nav-item"><a href="/posts/about/about-me.html" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://github.com/mifengjun" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <!----> </aside> <div><main class="withouttoc page"> <div class="theme-default-content content__default"><p><strong>前置条件</strong></p> <ul><li>jenkins与部署项目所用服务器为同一台</li></ul> <h2 id="_1、下载并运行-jenkins-war"><a href="#_1、下载并运行-jenkins-war" class="header-anchor">#</a> 1、下载并运行  <a href="http://mirrors.jenkins.io/war-stable/latest/jenkins.war" target="_blank" rel="noopener noreferrer">jenkins.war<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>将下载好的war包，放在tomcat的webapps目录下，启动tomcat 默认 8080 端口
+
+wget http://mirrors.jenkins.io/war-stable/latest/jenkins.war
+
+启动之后访问jenkins项目进行账号设置进行下一步操作
+
+安装jenkins所需插件，安装推荐的即可
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div> <p><img alt="启动jenkins" data-src="/images/posts/course-jenkins-auto-deploy-springboot/20180514150207538.png" loading="lazy" class="lazy"></p> <h2 id="_2、配置jenkins所需插件"><a href="#_2、配置jenkins所需插件" class="header-anchor">#</a> 2、配置jenkins所需插件</h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>执行这一步之前，我们在第一次启动jenkins的时候，已经安装过大部分插件，所以我们只需要检查是否安装了以下插件即可
+
+1.Maven Integration 使我们可以开始一个maven项目作为任务
+
+2.Git plugin 使我们可以读取存放在git仓库的项目
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p><img alt="配置jenkins" data-src="/images/posts/course-jenkins-auto-deploy-springboot/20180514151243623.png" loading="lazy" class="lazy"></p> <p><img alt="配置jenkins" data-src="/images/posts/course-jenkins-auto-deploy-springboot/20180514152100394.png" loading="lazy" class="lazy"></p> <h2 id="_3、配置jenkins全局工具"><a href="#_3、配置jenkins全局工具" class="header-anchor">#</a> 3、配置jenkins全局工具</h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>配置jenkins的全局工具主要是我们所使用到的 jdk、git、maven等
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><img alt="" data-src="/images/posts/course-jenkins-auto-deploy-springboot/20180514152706764.png" loading="lazy" class="lazy"> <img alt="" data-src="/images/posts/course-jenkins-auto-deploy-springboot/20180514152841580.png" loading="lazy" class="lazy"></p> <p><strong>jdk在选取安装的时候，如果在我们的服务器上已经安装好的话，直接填写JAVA_HOME路径即可，否则jenkins自动安装的话，需要提供Oracle的账号以及密码。</strong></p> <p><img alt="" data-src="/images/posts/course-jenkins-auto-deploy-springboot/20180514153051307.png" loading="lazy" class="lazy"></p> <p><strong>git和maven使用jenkins自动默认配置即可</strong> <img alt="" data-src="/images/posts/course-jenkins-auto-deploy-springboot/20180514153209524.png" loading="lazy" class="lazy"></p> <h2 id="_4、新建任务并配置任务相关设置"><a href="#_4、新建任务并配置任务相关设置" class="header-anchor">#</a> 4、新建任务并配置任务相关设置</h2> <p><img alt="" data-src="/images/posts/course-jenkins-auto-deploy-springboot/20180514153550388.png" loading="lazy" class="lazy"></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>配置任务相关参数
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>1.源码管理</p> <p><img alt="" data-src="/images/posts/course-jenkins-auto-deploy-springboot/20180514154017440.png" loading="lazy" class="lazy"></p> <p>如果出现 ：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>Failed to connect to repository : Error performing command: git ls-remote -h https://gitee.com/lvgo/sandbox.git HEAD
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>请检查服务器是否安装了git</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>apt-get install git
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>2.jenkins执行内容和操作成功后执行shell</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>clean package -Dmaven.test.skip=true
+
+# 将应用停止
+echo &quot;Stopping SpringBoot Application&quot;
+pid=`ps -ef | grep dofun-api.jar | grep -v grep | awk '{print $2}'`
+if [ -n &quot;$pid&quot; ]
+then
+   kill -9 $pid
+fi
+mv -f /root/.jenkins/workspace/dofunStreet/api/target/dofun-api.jar /usr/local/dofun/dofun-api.jar
+chmod 777 /usr/local/dofun/dofun-api.jar
+#bash /usr/local/dofun/start.sh
+BUILD_ID=dontKillMe /usr/local/dofun/start.sh
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>对应sh脚本内容</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>nohup java -jar /usr/local/dofun/dofun-api.jar &gt; /usr/local/dofun/dofun.log 2&gt;1&amp;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><img alt="" data-src="/images/posts/course-jenkins-auto-deploy-springboot/20180514154515871.png" loading="lazy" class="lazy"></p></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/mifengjun/river/edit/master/docs/posts/reprint/jenkins 自动化部署 spring boot 项目（多图）.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新: </span> <span class="time">2021/11/3</span></div></footer> <!----> </main></div> <aside class="page-sidebar"> <div class="page-side-toolbar"><!----> <div class="option-box-toc-over"><img src="/images/system/toc.png" class="nozoom"> <span class="show-txt">目录</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="max-height:550px"><div style="font-weight:bold;text-align:center;">jenkins 自动化部署 spring boot 项目（多图）</div> <hr> <div class="toc-box"><ul class="toc-sidebar-links"><li><a href="/posts/reprint/jenkins%20%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20spring%20boot%20%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%A4%9A%E5%9B%BE%EF%BC%89.html#_1、下载并运行-jenkins-war" class="toc-sidebar-link">1、下载并运行  jenkins.war</a><ul class="toc-sidebar-sub-headers"></ul></li><li><a href="/posts/reprint/jenkins%20%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20spring%20boot%20%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%A4%9A%E5%9B%BE%EF%BC%89.html#_2、配置jenkins所需插件" class="toc-sidebar-link">2、配置jenkins所需插件</a><ul class="toc-sidebar-sub-headers"></ul></li><li><a href="/posts/reprint/jenkins%20%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20spring%20boot%20%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%A4%9A%E5%9B%BE%EF%BC%89.html#_3、配置jenkins全局工具" class="toc-sidebar-link">3、配置jenkins全局工具</a><ul class="toc-sidebar-sub-headers"></ul></li><li><a href="/posts/reprint/jenkins%20%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20spring%20boot%20%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%A4%9A%E5%9B%BE%EF%BC%89.html#_4、新建任务并配置任务相关设置" class="toc-sidebar-link">4、新建任务并配置任务相关设置</a><ul class="toc-sidebar-sub-headers"></ul></li></ul></div></div></div></div></div> <div class="option-box"><img src="/images/system/mobi.png" width="25px" class="nozoom"> <span class="show-txt">手机看</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.9rem">微信扫一扫</span> <img height="180px" src="https://api.qrserver.com/v1/create-qr-code/?data=https://tama.wiki/posts/reprint/jenkins%20%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20spring%20boot%20%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%A4%9A%E5%9B%BE%EF%BC%89.html" style="margin:10px;">
+                可以<b>手机看</b>或分享至<b>朋友圈</b></div></div></div></div> <div class="option-box"><img src="/images/system/toggle.png" width="25px" class="nozoom"> <span class="show-txt">左栏</span></div> <div class="option-box"><img src="/images/system/talk.png" width="25px" class="nozoom"> <span class="show-txt">交流群</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.8rem;font-weight:bold;">添加我的微信进群交流</span> <img src="/images/personal/wechat_qrcode.png" height="180px" style="margin:10px;">
+                PS：添加时请备注<b>加群</b>，谢谢！
+              </div></div></div></div> <div class="option-box"><img src="/images/system/guli.png" width="25px" class="nozoom"> <span class="show-txt">支持我</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.8rem;font-weight:bold;">鼓励/支持/赞赏我</span> <img height="180px" src="/images/personal/guli.png" style="margin:5px;"> <br>鼓励鼓励
+              </div></div></div></div> <!----> <!----></div>  <!----> </aside></div><div class="global-ui"><LockArticle></LockArticle></div></div>
+    <script src="/assets/js/cg-styles.js?v=1635955335105" defer></script><script src="/assets/js/cg-4.js?v=1635955335105" defer></script><script src="/assets/js/cg-3.js?v=1635955335105" defer></script><script src="/assets/js/cg-56.js?v=1635955335105" defer></script><script src="/assets/js/cg-app.js?v=1635955335105" defer></script>
+  </body>
+</html>

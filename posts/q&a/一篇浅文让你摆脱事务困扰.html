@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>一篇浅文让你摆脱事务困扰 | River 江河</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/favicon.ico">
+    <script charset="utf-8" async="async" src="/js/jquery.min.js"></script>
+    <script charset="utf-8" async="async" src="/js/fingerprint2.min.js"></script>
+    <script charset="utf-8" async="async" src="https://s9.cnzz.com/z_stat.php?id=1278232949&amp;web_id=1278232949"></script>
+    <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?e0d604d5dea105bdeffb878e1b5c2b0f";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+          </script>
+    <meta name="description" content="积少成多，汇聚江河。">
+    <meta property="article:published_time" content="2019-09-12T19:52:27.000Z">
+    <meta property="article:modified_time" content="null">
+    <meta property="og:title" content="一篇浅文让你摆脱事务困扰">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="/posts/q&a/%E4%B8%80%E7%AF%87%E6%B5%85%E6%96%87%E8%AE%A9%E4%BD%A0%E6%91%86%E8%84%B1%E4%BA%8B%E5%8A%A1%E5%9B%B0%E6%89%B0.html">
+    <meta name="twitter:title" content="一篇浅文让你摆脱事务困扰">
+    <meta name="twitter:url" content="/posts/q&a/%E4%B8%80%E7%AF%87%E6%B5%85%E6%96%87%E8%AE%A9%E4%BD%A0%E6%91%86%E8%84%B1%E4%BA%8B%E5%8A%A1%E5%9B%B0%E6%89%B0.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="robots" content="all">
+    <meta name="author" content="米凤君">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="keywords" content="river,米凤君,设计模式,虚拟机">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <link rel="preload" href="/assets/css/0.styles.37e14bdf.css" as="style"><link rel="preload" href="/assets/css/styles.css?v=1635955335105" as="style"><link rel="preload" href="/assets/js/cg-styles.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-app.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-4.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-3.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-52.js?v=1635955335105" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.37e14bdf.css"><link rel="stylesheet" href="/assets/css/styles.css?v=1635955335105">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/favicon.ico" alt="River 江河" class="logo"> <span class="site-name can-hide">River 江河</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/posts/index/nav.html" class="nav-link">
+  导读
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><span class="title">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/posts/java/jvm/1. 运行时数据区域.html" class="nav-link">
+  JVM
+</a></li></ul></div></div><div class="nav-item"><a href="/posts/about/about-me.html" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://github.com/mifengjun" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/posts/index/nav.html" class="nav-link">
+  导读
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><span class="title">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/posts/java/jvm/1. 运行时数据区域.html" class="nav-link">
+  JVM
+</a></li></ul></div></div><div class="nav-item"><a href="/posts/about/about-me.html" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://github.com/mifengjun" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <!----> </aside> <div><main class="withouttoc page"> <div class="theme-default-content content__default"><p>这将会是你编程生涯很有意义的10分钟</p> <h4 id="背景"><a href="#背景" class="header-anchor">#</a> 背景</h4> <p>反对枯燥的技术学习，拒绝从入门到放弃，从删库到跑路。
+拒绝！大声跟我念！拒绝！</p> <h4 id="啥是事务"><a href="#啥是事务" class="header-anchor">#</a> 啥是事务</h4> <p><s>事物指的是逻辑上的一组操作，这组操作要么全部成功，要么全部失败</s>
+同生共死</p> <h4 id="事务的四个特性-acid"><a href="#事务的四个特性-acid" class="header-anchor">#</a> 事务的四个特性 ACID</h4> <p>原子性（Atomicity）：事物是一个不可分割的工作单位，事物中的操作要么都发生，要么都不发生</p> <p>一致性（Consistency）：事物前后数据的完整性必须保持一致</p> <p>隔离性（Isolation）：指多个用户并发访问数据库时，一个用户的事物不能被其他用户的事物所干扰，多个并发事物之间数据要相互隔离。</p> <p>持久性（Durability）：一个事物一旦被提交，它对数据库中数据的改变就是永久性的，即使数据库发生故障也不应该对其有任何影响。</p> <h5 id="事务的7种传播行为"><a href="#事务的7种传播行为" class="header-anchor">#</a> 事务的7种传播行为</h5> <p>这里我看到好多官方或者博文写的基本都是差不多. 如果我会用的话, 我可能不会去翻书翻博文找答案. 那既然翻书的和找答案的都是不会用的. 那怎么能让寻求答案的人, 一眼就看到自己想要的东西呢?</p> <h5 id="首先7种传播行为分别为"><a href="#首先7种传播行为分别为" class="header-anchor">#</a> 首先7种传播行为分别为:</h5> <p><em>名字有可能和大家看到其他的文章内容不一样. 个人理解. 不影响阅读</em></p> <ol><li>默认事务  <strong>REQUIRED</strong>(开启事务后不做任何传播行为说明的)</li> <li>新启事务  <strong>REQUIRES_NEW</strong></li> <li>嵌套事务  <strong>NESTED</strong></li> <li>依赖事务  <strong>SUPPORTS</strong></li> <li>非事务  <strong>NOT_SUPPORTED</strong></li> <li>必须非事务  <strong>NEVER</strong></li> <li>必须以事务  <strong>MANDATORY</strong></li></ol> <p>那这7个分别对应的是什么情景, 我们来用最直白, 最简单的话来说明一下.</p> <h6 id="_1-默认事务-required"><a href="#_1-默认事务-required" class="header-anchor">#</a> 1. 默认事务 REQUIRED</h6> <p>顾名思义, 当你对某个方法开启了事务, 但又不去指定它的传播行为时, 此时的事务管理会默认分配给他一个事务. 那就是调用者如果有事务便加入其中, 否则自身新启事务. 什么意思</p> <p>你去小李家玩, 玩累了, 想吃饭, <strong>如果小李家可以吃饭, 那就在小李家一起吃, 否则你就自己吃.</strong></p> <h6 id="_2-新启事务-requires-new"><a href="#_2-新启事务-requires-new" class="header-anchor">#</a> 2. 新启事务 REQUIRES_NEW</h6> <p>与默认事务中的第二种情况相同. 只不过, 此时无论小李家可不可以吃饭, 你都要自己吃, 不过还有一种情况, 就是如果调用者存在事务, 那该事务需要挂起.也就是说. 小李家如果可以吃饭, 那他们家人要等你吃完以后才能吃, 相当于暂停. 但是大家要切记, 这段时间只是时间暂停, 资源是在继续使用的. 也就是说, 外层事务挂起时, 数据库连接是一直持有状态. 所以你吃饭要快点. 不然等你吃的太久, 小李家其他人一直在等他们的餐桌吃饭可是要一直等下去的. <strong><code>此时说的是事务挂起的情况</code></strong></p> <h6 id="_3-嵌套事务-nested"><a href="#_3-嵌套事务-nested" class="header-anchor">#</a> 3. 嵌套事务  NESTED</h6> <p>厉害的来了, 这个事务比较特殊, 适用的场景大家根据我后面的说明自行 决断;
+当前存在事务, 加入到这个事务中作为一个附属事务.  如果不存在, 则以默认事务执行, 其实也就是以新启事务执行;</p> <p>解释一下附属事务的情况是什么意思. 附属, 归属,具体表现为我们的县城, 归属市区管辖, 但自己又独立. 当市级A()派遣任务给县城B(), 与它一同协作完成. 如果县城B()没有预期完成任务,我们说的抛出异常, 那市级A()会继续执行该市的其他任务. 如果市级预期完成, 那么县城的任务失败, 市级负责的部分任务完成. 此时事务A()提交. 县城事务B()回滚.
+但, 如果县城B()按期完成任务, 市级A()任务没有完成. 那县城B()的事务要同A()一起回滚.</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token comment">// 独立事务</span>
+<span class="token function">a</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token comment">// 嵌套事务</span>
+	<span class="token function">b</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p><strong>a调用b , a 为独立事务 b 为嵌套事务
+当执行到方法b时, a事务被挂起. 方法 b 无论成功失败, a继续执行
+a执行成功 a与b 事务提交
+a执行失败 无论b事务是否完成 与a一同回滚</strong></p> <p>嵌套事务只影响本身事务, 不能影响外层事务. 同时受外层事务影响
+a可以影响b , 但b不能影响a</p> <p><strong>顺便提一点</strong> 如果b为默认事务, 此时 b 如果出现异常, 整个事务执行回滚, 不能对b做异常捕获不抛出异常. 否则会出现事务提交异常, 因为此时 a 与 b 同处一个事务中, 要么同时提交, 要么同时回滚.</p> <hr> <p><strong>上面讲的就是我们最常用的三种传播行为, 下面再看看其他4种不常用的</strong></p> <h6 id="_4-依赖事务-supports"><a href="#_4-依赖事务-supports" class="header-anchor">#</a> 4. 依赖事务  SUPPORTS</h6> <p>这种事务情况为, 如果调用者有事务我就加入, 没有我就以非事务执行
+小李家有饭我就吃, 没有我就不吃了</p> <h6 id="_5-非事务-not-supported"><a href="#_5-非事务-not-supported" class="header-anchor">#</a> 5. 非事务 NOT_SUPPORTED</h6> <p>如果调用者有事务我就把他挂起, 然后以非事务执行
+小李家有饭我就让他暂停, 然后我做我的事,做完后恢复挂起事务继续执行</p> <h6 id="_6-必须非事务-never"><a href="#_6-必须非事务-never" class="header-anchor">#</a> 6. 必须非事务  NEVER</h6> <p>如果调用者<strong>有事务</strong>我就抛出异常. 不再继续执行
+小李家<strong>有饭</strong>我就报警, 谁都别想动</p> <h6 id="_7-必须以事务-mandatory"><a href="#_7-必须以事务-mandatory" class="header-anchor">#</a> 7. 必须以事务  MANDATORY</h6> <p>如果调用者<strong>没有事务</strong>我就抛出异常. 不再继续执行
+小李家<strong>没有饭</strong>我就报警, 谁都别想动</p> <hr> <h4 id="接下来你应该知道的"><a href="#接下来你应该知道的" class="header-anchor">#</a> 接下来你应该知道的</h4> <p>说了基本概念, 我觉得既然是最简单的事务学习, 那一定是要跟大家讲怎么使用事务.具体怎么去配置事务大家随便百度吧. 就不赘述了.</p> <p>当你将你的方法配置好事务后. 有几个基础的东西你一定要知道, 当然现在用的事务都是spring的事务.</p> <h4 id="_1-同方法内-被调用的事务不会生效"><a href="#_1-同方法内-被调用的事务不会生效" class="header-anchor">#</a> 1. 同方法内, 被调用的事务不会生效</h4> <p>举例</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">class</span> <span class="token class-name">ServiceA</span> <span class="token punctuation">(</span>
+	<span class="token comment">// 方法 A() 配有独立事务</span>
+	fun <span class="token class-name">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment">// 调用 方法B(), 记笔记. 此时 B 的独立事务不生效</span>
+		<span class="token class-name">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token comment">// 方法 B() 配有独立事务</span>
+	fun <span class="token class-name">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+	<span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>该问题比较好理解. 原因是由于spring的事务管理是基于 spring 的 AOP 实现的. 而方法增强需要通过调用时执行切点方法才能实现增强. 所以此时的方法B就是正常的一段方法加入到了方法A中, 与 A同事务.</p> <h4 id="_2-默认事务的异常处理-重点"><a href="#_2-默认事务的异常处理-重点" class="header-anchor">#</a> 2. 默认事务的异常处理*[重点]</h4> <p>我现在有以下几个方法</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">class</span> <span class="token class-name">ServiceA</span> <span class="token punctuation">(</span>
+	<span class="token comment">// 方法 A() 配有默认事务</span>
+	fun <span class="token class-name">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment">// 调用 方法B()</span>
+		<span class="token class-name">ServiceB<span class="token punctuation">.</span>B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">class</span> <span class="token class-name">ServiceB</span> <span class="token punctuation">(</span>
+	<span class="token comment">// 方法 B() 配有默认事务</span>
+	fun <span class="token class-name">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment">// 调用 方法C()</span>
+		<span class="token keyword">try</span><span class="token punctuation">{</span>
+			<span class="token class-name">ServiceC<span class="token punctuation">.</span>C</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	
+<span class="token punctuation">)</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">class</span> <span class="token class-name">ServiceC</span> <span class="token punctuation">(</span>
+	<span class="token comment">// 方法 C() 配有默认事务</span>
+	fun <span class="token class-name">C</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		
+	<span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>我将Service类A B C 都增加了事务. 但没配置具体事务传播行为. 所以为默认事务.
+默认事务为: 谁用谁管. 不管我就自己管自己</p> <p>此时的情况为, A在调用的时候没有事务, 所以他自己新启了事务, 当它调用B的时候, B发现A存在独立事务, 那么B加入到了A的事务中, 同样 B在调用C的时候已经加入到了A的事务中, 那么C在执行的时候加入到了A的事务中.</p> <p>调用者有事务, 我加入,
+调用者没有, 我新启.</p> <p>此时情况. 正常运行, 为独立事务没有问题.</p> <p>但当方法 C()出现异常时. 被方法 B()捕获并未抛出.
+当方法执行结束后, 会出现
+<code>Transaction has been rolled back because it has been marked as rollback</code></p> <p>原因为上面提到的</p> <p><strong>原子性（Atomicity）：事物是一个不可分割的工作单位，事物中的操作要么都发生，要么都不发生</strong></p> <p>方法C()不发生, 其他也不能继续发生 . 所以当C()出现问题时, B() 把它包庇了下来. 当时A()不知道, 还继续做提交, 说我们的事务都提交了. 其实C()回滚了. 最后来事情暴露了. 程序执行中断. 这个锅. B 必须背. 因为当它捕获了异常后, 应将异常继续抛出. 让程序正常中断. 不然就是意外退出.</p> <p><strong>切记 -- 知识点, 记笔记</strong></p></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/mifengjun/river/edit/master/docs/posts/q&amp;a/一篇浅文让你摆脱事务困扰.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新: </span> <span class="time">2021/11/3</span></div></footer> <!----> </main></div> <aside class="page-sidebar"> <div class="page-side-toolbar"><!----> <div class="option-box-toc-over"><img src="/images/system/toc.png" class="nozoom"> <span class="show-txt">目录</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="max-height:550px"><div style="font-weight:bold;text-align:center;">一篇浅文让你摆脱事务困扰</div> <hr> <div class="toc-box"><!----></div></div></div></div></div> <div class="option-box"><img src="/images/system/mobi.png" width="25px" class="nozoom"> <span class="show-txt">手机看</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.9rem">微信扫一扫</span> <img height="180px" src="https://api.qrserver.com/v1/create-qr-code/?data=https://tama.wiki/posts/q&amp;a/%E4%B8%80%E7%AF%87%E6%B5%85%E6%96%87%E8%AE%A9%E4%BD%A0%E6%91%86%E8%84%B1%E4%BA%8B%E5%8A%A1%E5%9B%B0%E6%89%B0.html" style="margin:10px;">
+                可以<b>手机看</b>或分享至<b>朋友圈</b></div></div></div></div> <div class="option-box"><img src="/images/system/toggle.png" width="25px" class="nozoom"> <span class="show-txt">左栏</span></div> <div class="option-box"><img src="/images/system/talk.png" width="25px" class="nozoom"> <span class="show-txt">交流群</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.8rem;font-weight:bold;">添加我的微信进群交流</span> <img src="/images/personal/wechat_qrcode.png" height="180px" style="margin:10px;">
+                PS：添加时请备注<b>加群</b>，谢谢！
+              </div></div></div></div> <div class="option-box"><img src="/images/system/guli.png" width="25px" class="nozoom"> <span class="show-txt">支持我</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.8rem;font-weight:bold;">鼓励/支持/赞赏我</span> <img height="180px" src="/images/personal/guli.png" style="margin:5px;"> <br>鼓励鼓励
+              </div></div></div></div> <!----> <!----></div>  <!----> </aside></div><div class="global-ui"><LockArticle></LockArticle></div></div>
+    <script src="/assets/js/cg-styles.js?v=1635955335105" defer></script><script src="/assets/js/cg-4.js?v=1635955335105" defer></script><script src="/assets/js/cg-3.js?v=1635955335105" defer></script><script src="/assets/js/cg-52.js?v=1635955335105" defer></script><script src="/assets/js/cg-app.js?v=1635955335105" defer></script>
+  </body>
+</html>

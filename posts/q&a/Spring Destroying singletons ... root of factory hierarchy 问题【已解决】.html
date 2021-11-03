@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Spring Destroying singletons ... root of factory hierarchy 问题【已解决】 | River 江河</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/favicon.ico">
+    <script charset="utf-8" async="async" src="/js/jquery.min.js"></script>
+    <script charset="utf-8" async="async" src="/js/fingerprint2.min.js"></script>
+    <script charset="utf-8" async="async" src="https://s9.cnzz.com/z_stat.php?id=1278232949&amp;web_id=1278232949"></script>
+    <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?e0d604d5dea105bdeffb878e1b5c2b0f";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+          </script>
+    <meta name="description" content="积少成多，汇聚江河。">
+    <meta property="article:published_time" content="2018-09-21T12:05:03.000Z">
+    <meta property="article:modified_time" content="null">
+    <meta property="og:title" content="Spring Destroying singletons ... root of factory hierarchy 问题【已解决】">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="/posts/q&a/Spring%20Destroying%20singletons%20...%20root%20of%20factory%20hierarchy%20%E9%97%AE%E9%A2%98%E3%80%90%E5%B7%B2%E8%A7%A3%E5%86%B3%E3%80%91.html">
+    <meta name="twitter:title" content="Spring Destroying singletons ... root of factory hierarchy 问题【已解决】">
+    <meta name="twitter:url" content="/posts/q&a/Spring%20Destroying%20singletons%20...%20root%20of%20factory%20hierarchy%20%E9%97%AE%E9%A2%98%E3%80%90%E5%B7%B2%E8%A7%A3%E5%86%B3%E3%80%91.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="Spring">
+    <meta property="article:tag" content="Spring">
+    <meta name="robots" content="all">
+    <meta name="author" content="米凤君">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="keywords" content="river,米凤君,设计模式,虚拟机">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <link rel="preload" href="/assets/css/0.styles.37e14bdf.css" as="style"><link rel="preload" href="/assets/css/styles.css?v=1635955335105" as="style"><link rel="preload" href="/assets/js/cg-styles.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-app.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-4.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-3.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-46.js?v=1635955335105" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.37e14bdf.css"><link rel="stylesheet" href="/assets/css/styles.css?v=1635955335105">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/favicon.ico" alt="River 江河" class="logo"> <span class="site-name can-hide">River 江河</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/posts/index/nav.html" class="nav-link">
+  导读
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><span class="title">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/posts/java/jvm/1. 运行时数据区域.html" class="nav-link">
+  JVM
+</a></li></ul></div></div><div class="nav-item"><a href="/posts/about/about-me.html" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://github.com/mifengjun" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/posts/index/nav.html" class="nav-link">
+  导读
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><span class="title">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/posts/java/jvm/1. 运行时数据区域.html" class="nav-link">
+  JVM
+</a></li></ul></div></div><div class="nav-item"><a href="/posts/about/about-me.html" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://github.com/mifengjun" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <!----> </aside> <div><main class="withouttoc page"> <div class="theme-default-content content__default"><h3 id="问题"><a href="#问题" class="header-anchor">#</a> 问题</h3> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token class-name">Destroying</span> singletons in <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>support<span class="token punctuation">.</span></span>DefaultListableBeanFactory</span><span class="token annotation punctuation">@13d740f</span><span class="token operator">:</span> 
+defining beans <span class="token punctuation">[</span>dataSource<span class="token punctuation">,</span>sessionFactory<span class="token punctuation">,</span>dccDAO<span class="token punctuation">,</span>groupueDAO<span class="token punctuation">,</span>groupbasDAO<span class="token punctuation">,</span>olcsDAO<span class="token punctuation">,</span>hibernateTemplate<span class="token punctuation">,</span>dccService<span class="token punctuation">,</span>
+groupueService<span class="token punctuation">,</span>groupbasService<span class="token punctuation">,</span>olcsService<span class="token punctuation">]</span><span class="token punctuation">;</span> root of factory hierarchy
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div> <h4 id="问题描述"><a href="#问题描述" class="header-anchor">#</a> 问题描述</h4> <p>我遇到该问题的原因在公司的Eclipse项目移到IDEA上面时候报的这个错,虽然Eclipse用着也还好,但是更习惯用IDEA,这里就不对编辑器做过的内容了.</p> <p>然后我再Eclipse上面运行没有什么问题,但是放在IDEA上面跑就行,最早的时候就去google百度了一圈.结果寥寥草草,因为这种情况也不是很常见的问题,所以无果.草草了事.</p> <p>今天有空,就又回去看了一下这个问题,大致排查过程如下.</p> <p>注释掉了所有的其他spring-...xml文件,只加载了一个spring application context,然后运行起来之后终于能够看到错误了,就逐个在去加载spring-...xml,直到多加载一个就出现这个错误的时候开始了问题分析.</p> <h4 id="分析过程略"><a href="#分析过程略" class="header-anchor">#</a> 分析过程略</h4> <h4 id="分析结果"><a href="#分析结果" class="header-anchor">#</a> 分析结果:</h4> <p>JVM内存的锅,设置了虚拟机参数,完美解决</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>-Xms2048M -Xmx2048M -XX:PermSize=256M -XX:MaxPermSize=512M
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>其实最开始的时候想到了是虚拟机内存大小的问题,但是当时只设置了堆内存,并没有设置方法区的内存大小,知道我多加载一个配置文件就报错,才考虑到这个地方,而且已经打印出来了报错信息</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>java.lang.OutOfMemoryError: PermGen space
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>看见这个错误开心的不得了. 至此问题完美解决.</p></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/mifengjun/river/edit/master/docs/posts/q&amp;a/Spring Destroying singletons ... root of factory hierarchy 问题【已解决】.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新: </span> <span class="time">2021/11/3</span></div></footer> <!----> </main></div> <aside class="page-sidebar"> <div class="page-side-toolbar"><!----> <div class="option-box-toc-over"><img src="/images/system/toc.png" class="nozoom"> <span class="show-txt">目录</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="max-height:550px"><div style="font-weight:bold;text-align:center;">Spring Destroying singletons ... root of factory hierarchy 问题【已解决】</div> <hr> <div class="toc-box"><!----></div></div></div></div></div> <div class="option-box"><img src="/images/system/mobi.png" width="25px" class="nozoom"> <span class="show-txt">手机看</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.9rem">微信扫一扫</span> <img height="180px" src="https://api.qrserver.com/v1/create-qr-code/?data=https://tama.wiki/posts/q&amp;a/Spring%20Destroying%20singletons%20...%20root%20of%20factory%20hierarchy%20%E9%97%AE%E9%A2%98%E3%80%90%E5%B7%B2%E8%A7%A3%E5%86%B3%E3%80%91.html" style="margin:10px;">
+                可以<b>手机看</b>或分享至<b>朋友圈</b></div></div></div></div> <div class="option-box"><img src="/images/system/toggle.png" width="25px" class="nozoom"> <span class="show-txt">左栏</span></div> <div class="option-box"><img src="/images/system/talk.png" width="25px" class="nozoom"> <span class="show-txt">交流群</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.8rem;font-weight:bold;">添加我的微信进群交流</span> <img src="/images/personal/wechat_qrcode.png" height="180px" style="margin:10px;">
+                PS：添加时请备注<b>加群</b>，谢谢！
+              </div></div></div></div> <div class="option-box"><img src="/images/system/guli.png" width="25px" class="nozoom"> <span class="show-txt">支持我</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.8rem;font-weight:bold;">鼓励/支持/赞赏我</span> <img height="180px" src="/images/personal/guli.png" style="margin:5px;"> <br>鼓励鼓励
+              </div></div></div></div> <!----> <!----></div>  <!----> </aside></div><div class="global-ui"><LockArticle></LockArticle></div></div>
+    <script src="/assets/js/cg-styles.js?v=1635955335105" defer></script><script src="/assets/js/cg-4.js?v=1635955335105" defer></script><script src="/assets/js/cg-3.js?v=1635955335105" defer></script><script src="/assets/js/cg-46.js?v=1635955335105" defer></script><script src="/assets/js/cg-app.js?v=1635955335105" defer></script>
+  </body>
+</html>

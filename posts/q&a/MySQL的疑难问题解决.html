@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MySQL的疑难问题解决 | River 江河</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/favicon.ico">
+    <script charset="utf-8" async="async" src="/js/jquery.min.js"></script>
+    <script charset="utf-8" async="async" src="/js/fingerprint2.min.js"></script>
+    <script charset="utf-8" async="async" src="https://s9.cnzz.com/z_stat.php?id=1278232949&amp;web_id=1278232949"></script>
+    <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?e0d604d5dea105bdeffb878e1b5c2b0f";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+          </script>
+    <meta name="description" content="积少成多，汇聚江河。">
+    <meta property="article:published_time" content="2018-07-04T13:26:51.000Z">
+    <meta property="article:modified_time" content="null">
+    <meta property="og:title" content="MySQL的疑难问题解决">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="/posts/q&a/MySQL%E7%9A%84%E7%96%91%E9%9A%BE%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.html">
+    <meta name="twitter:title" content="MySQL的疑难问题解决">
+    <meta name="twitter:url" content="/posts/q&a/MySQL%E7%9A%84%E7%96%91%E9%9A%BE%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="MySQL">
+    <meta property="article:tag" content="MySQL">
+    <meta name="robots" content="all">
+    <meta name="author" content="米凤君">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="keywords" content="river,米凤君,设计模式,虚拟机">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <link rel="preload" href="/assets/css/0.styles.37e14bdf.css" as="style"><link rel="preload" href="/assets/css/styles.css?v=1635955335105" as="style"><link rel="preload" href="/assets/js/cg-styles.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-app.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-4.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-3.js?v=1635955335105" as="script"><link rel="preload" href="/assets/js/cg-44.js?v=1635955335105" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.37e14bdf.css"><link rel="stylesheet" href="/assets/css/styles.css?v=1635955335105">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/favicon.ico" alt="River 江河" class="logo"> <span class="site-name can-hide">River 江河</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/posts/index/nav.html" class="nav-link">
+  导读
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><span class="title">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/posts/java/jvm/1. 运行时数据区域.html" class="nav-link">
+  JVM
+</a></li></ul></div></div><div class="nav-item"><a href="/posts/about/about-me.html" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://github.com/mifengjun" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/posts/index/nav.html" class="nav-link">
+  导读
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><span class="title">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/posts/java/jvm/1. 运行时数据区域.html" class="nav-link">
+  JVM
+</a></li></ul></div></div><div class="nav-item"><a href="/posts/about/about-me.html" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://github.com/mifengjun" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <!----> </aside> <div><main class="withouttoc page"> <div class="theme-default-content content__default"><h4 id="前置条件"><a href="#前置条件" class="header-anchor">#</a> 前置条件</h4> <ol><li>ubuntu 16.04</li> <li>mysql-server-5.7</li></ol> <hr> <h4 id="安装步骤"><a href="#安装步骤" class="header-anchor">#</a> 安装步骤</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>apt-get update
+apt-get installl mysql-server-5.7
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>对于出现的提示选择 y 就好 ，然后输入root密码。安装完成</p> <hr> <h4 id="操作使用"><a href="#操作使用" class="header-anchor">#</a> 操作使用</h4> <ol><li>远程连接mysql</li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>mysql -h IP -P port -u root -p
+
+mysql -h 127.0.0.1 -P 3306 -u root
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><blockquote><p>以下内容为转载</p></blockquote> <p>1.https://www.cnblogs.com/xujishou/p/6306765.html（MySQL5.7 添加用户、删除用户与授权）
+2.https://www.cnblogs.com/SQL888/p/5748824.html（mysql 用户及权限管理 小结）</p> <hr> <h4 id="疑难问题解决-后续更新"><a href="#疑难问题解决-后续更新" class="header-anchor">#</a> 疑难问题解决 （后续更新）</h4> <p>###一、ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>复现
+root@itlvgo:~# mysql
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+root@itlvgo:~# mysql -uroot
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p><img alt="lvgo star dust" data-src="/images/posts/course-mysql42701/20180704102409229.png" loading="lazy" class="lazy"></p> <p><strong>恩。原因是因为需要输入输入密码的命令，少输入了一个-p using password：NO 正确操作如下</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>root@itlvgo:~# mysql -uroot -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 5.7.22-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql&gt; 
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>###二、配置用户无法外网访问（本地可以）</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>/etc/mysql/mysql.conf.d
+
+配置如下信息
+port=3306
+
+// 原来的注释掉，默认127.0.0.1
+bind-address=0.0.0.0
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>如果还不可以，进行下面的检查操作</p> <ol><li>检查一下是否有开启防火墙；（云服务器的安全组配置）</li> <li>如果开启不想关闭，需要开放mysql的占用端口，默认3306；</li> <li>关闭防火墙。。
+###三、无法存储中文
+修改mysql配置文件</li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>cd /etc/mysql
+vi my.cnf
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>[client]
+default-character-set=utf8
+[mysqld]
+character-set-server=utf8
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>重起mysql即可</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>sudo /etc/init.d/mysql restart
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/mifengjun/river/edit/master/docs/posts/q&amp;a/MySQL的疑难问题解决.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新: </span> <span class="time">2021/11/3</span></div></footer> <!----> </main></div> <aside class="page-sidebar"> <div class="page-side-toolbar"><!----> <div class="option-box-toc-over"><img src="/images/system/toc.png" class="nozoom"> <span class="show-txt">目录</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="max-height:550px"><div style="font-weight:bold;text-align:center;">MySQL的疑难问题解决</div> <hr> <div class="toc-box"><!----></div></div></div></div></div> <div class="option-box"><img src="/images/system/mobi.png" width="25px" class="nozoom"> <span class="show-txt">手机看</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.9rem">微信扫一扫</span> <img height="180px" src="https://api.qrserver.com/v1/create-qr-code/?data=https://tama.wiki/posts/q&amp;a/MySQL%E7%9A%84%E7%96%91%E9%9A%BE%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.html" style="margin:10px;">
+                可以<b>手机看</b>或分享至<b>朋友圈</b></div></div></div></div> <div class="option-box"><img src="/images/system/toggle.png" width="25px" class="nozoom"> <span class="show-txt">左栏</span></div> <div class="option-box"><img src="/images/system/talk.png" width="25px" class="nozoom"> <span class="show-txt">交流群</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.8rem;font-weight:bold;">添加我的微信进群交流</span> <img src="/images/personal/wechat_qrcode.png" height="180px" style="margin:10px;">
+                PS：添加时请备注<b>加群</b>，谢谢！
+              </div></div></div></div> <div class="option-box"><img src="/images/system/guli.png" width="25px" class="nozoom"> <span class="show-txt">支持我</span> <div class="toc-container"><div class="pos-box"><div class="icon-arrow"></div> <div class="scroll-box" style="text-align:center"><span style="font-size:0.8rem;font-weight:bold;">鼓励/支持/赞赏我</span> <img height="180px" src="/images/personal/guli.png" style="margin:5px;"> <br>鼓励鼓励
+              </div></div></div></div> <!----> <!----></div>  <!----> </aside></div><div class="global-ui"><LockArticle></LockArticle></div></div>
+    <script src="/assets/js/cg-styles.js?v=1635955335105" defer></script><script src="/assets/js/cg-4.js?v=1635955335105" defer></script><script src="/assets/js/cg-3.js?v=1635955335105" defer></script><script src="/assets/js/cg-44.js?v=1635955335105" defer></script><script src="/assets/js/cg-app.js?v=1635955335105" defer></script>
+  </body>
+</html>
